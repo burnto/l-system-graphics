@@ -4,12 +4,21 @@
 
   var angle = 60;
   var d = 20;
-  var iter = 6;
+  var iter = 8;
+
+  var w = 1920;
+  var h = 1080;
+  var x = 20;
+  var y = h;
+  var r = -90;
+
+  var cInc = 0.01;
+
   var c;
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': "f[+f>][-f]f"
+      'f': "f[>+f>f][-f]f"
     },
     renderRules: {
       'f': function () {
@@ -17,8 +26,11 @@
         line(0, 0, d, 0);
         translate(d,0);
       },
+      '<': function () {
+        c = color((c.hsba[0] - cInc) % 360, c.hsba[1], c.hsba[2], c.hsba[3]);
+      },
       '>': function () {
-        c = color((c.hsba[0] + 0.1) % 360, c.hsba[1], c.hsba[2], c.hsba[3]);
+        c = color((c.hsba[0] + cInc) % 360, c.hsba[1], c.hsba[2], c.hsba[3]);
       },
       '[': function () {
         push();
@@ -42,11 +54,11 @@
     console.log(c);
 
     frameRate(1);
-    createCanvas(1024 * 1.62, 1024);
+    createCanvas(w, h);
     background(255);
     /* translate(0, 1024 / 2); */
-    translate(1024 * 1.62/ 2, 1024);
-    rotate(-90);
+    translate(x, y);
+    rotate(r);
     push();
     system.reset();
     system.simulate(iter);
