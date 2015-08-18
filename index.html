@@ -2,15 +2,15 @@
 <script src="lsystem.js"></script>
 <script>
 
-  var angle = 60;
+  var angle = 30;
   var d = 20;
-  var iter = 8;
+  var iter = 6;
 
   var w = 1920;
   var h = 1080;
-  var x = 20;
+  var x = w;
   var y = h;
-  var r = -90;
+  var r = -180;
 
   var cInc = 0.01;
 
@@ -50,12 +50,12 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(180, 80, 80, 1);
+    c = color(0, 80, 80, 1);
     console.log(c);
 
     frameRate(1);
     createCanvas(w, h);
-    background(255);
+    background(0);
     /* translate(0, 1024 / 2); */
     translate(x, y);
     rotate(r);
