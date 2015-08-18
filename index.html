@@ -2,9 +2,9 @@
 <script src="lsystem.js"></script>
 <script>
 
-  var angle = 30;
+  var angle = 89;
   var d = 20;
-  var iter = 6;
+  var iter = 8;
 
   var w = 1920;
   var h = 1080;
@@ -23,7 +23,7 @@
     renderRules: {
       'f': function () {
         stroke(c);
-        line(0, 0, d, 0);
+        rect(0, 0, d, 2);
         translate(d,0);
       },
       '<': function () {
@@ -50,12 +50,12 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(0, 80, 80, 1);
+    c = color(0, 0, 0, 1);
     console.log(c);
 
     frameRate(1);
     createCanvas(w, h);
-    background(0);
+    background(255);
     /* translate(0, 1024 / 2); */
     translate(x, y);
     rotate(r);
