@@ -2,23 +2,23 @@
 <script src="lsystem.js"></script>
 <script>
 
-  var angle = 20;
+  var angle = 60;
   var d = 40;
-  var iter = 7;
+  var iter = 18;
 
   var w = 1920;
   var h = 1080;
-  var x = w * .3;
-  var y = h * .8;
+  var x = w * .5;
+  var y = h * .5;
   var r = -135;
 
-  var cInc = 0.01;
+  var cInc = -0.001;
 
   var c;
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': ">f*[f-f-f-f]"
+      'f': ">f*[+>f]"
     },
     renderRules: {
       'f': function () {
@@ -41,7 +41,7 @@
         pop();
       },
       '*': function () {
-        rotate(random(10));
+        angle += 30
       },
       '+': function () {
         rotate(angle);
@@ -55,11 +55,11 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(180, 80, 50, 0.1);
+    c = color(180, 80, 50, 0.01);
 
     frameRate(1);
     createCanvas(w, h);
-    background(10);
+    background(255);
     /* translate(0, 1024 / 2); */
     translate(x, y);
     rotate(r);
