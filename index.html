@@ -2,14 +2,14 @@
 <script src="lsystem.js"></script>
 <script>
 
-  var angle = 30.9;
-  var d = 80;
+  var angle = 20;
+  var d = 40;
   var iter = 7;
 
   var w = 1920;
   var h = 1080;
-  var x = 2 * w/3;
-  var y = h/2;
+  var x = w * .3;
+  var y = h * .8;
   var r = -135;
 
   var cInc = 0.01;
@@ -18,7 +18,7 @@
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': "f[f-f-f-f]"
+      'f': ">f*[f-f-f-f]"
     },
     renderRules: {
       'f': function () {
@@ -40,6 +40,9 @@
       ']': function () {
         pop();
       },
+      '*': function () {
+        rotate(random(10));
+      },
       '+': function () {
         rotate(angle);
       },
@@ -52,12 +55,11 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(0, 0, 0, 0.1);
-    console.log(c);
+    c = color(180, 80, 50, 0.1);
 
     frameRate(1);
     createCanvas(w, h);
-    background(255);
+    background(10);
     /* translate(0, 1024 / 2); */
     translate(x, y);
     rotate(r);

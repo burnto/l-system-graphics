@@ -16,7 +16,6 @@ LSystem.prototype = (function () {
     },
 
     render: function () {
-      console.log(state);
       for (var i = 0; i < state.length; i++) {
         var s = state.charAt(i);
         var rule = this.renderRules[s];
