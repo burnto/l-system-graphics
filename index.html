@@ -4,7 +4,7 @@
 
   var angle = 60;
   var d = 40;
-  var iter = 18;
+  var iter = 10;
 
   var w = 1920;
   var h = 1080;
@@ -18,7 +18,8 @@
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': ">f*[+>f]"
+      'f': ">gf*[+>f]",
+      'g': "[+gf[>g]]"
     },
     renderRules: {
       'f': function () {
@@ -27,6 +28,10 @@
         strokeWeight(0.5)
         line(0, 0, d, 0);
         translate(d,0);
+      },
+      'g': function () {
+        ellipse(0, 0, d/2, d/2);
+        translate(d, 0);
       },
       '<': function () {
         c = color((c.hsba[0] - cInc) % 360, c.hsba[1], c.hsba[2], c.hsba[3]);
@@ -55,12 +60,12 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(180, 80, 50, 0.01);
+    c = color(80, 80, 80, 1);
 
     frameRate(1);
     createCanvas(w, h);
-    background(255);
-    /* translate(0, 1024 / 2); */
+    noFill();
+    background(color(70, 10, 80, 1));
     translate(x, y);
     rotate(r);
     push();
