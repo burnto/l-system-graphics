@@ -3,12 +3,12 @@
 <script>
 
   var angle = 60;
-  var d = 40;
+  var d = 100;
   var iter = 10;
 
   var w = 1920;
   var h = 1080;
-  var x = w * .5;
+  var x = w * .3;
   var y = h * .5;
   var r = -135;
 
@@ -18,8 +18,10 @@
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': ">gf*[+>f]",
-      'g': "[+gf[>g]]"
+      'f': ">gf*[+>fi]",
+      'g': "[+gf[>h]]",
+      'h': "[f[g]]",
+      'i': "[f[gh]]"
     },
     renderRules: {
       'f': function () {
@@ -33,6 +35,15 @@
         ellipse(0, 0, d/2, d/2);
         translate(d, 0);
       },
+      'h': function () {
+        ellipse(0, 0, d/3, d/3),
+        translate(2 * d / 3, 0);
+      },
+      'i': function () {
+        ellipse(0, 0, d/4, d/4),
+        translate(2 * d / 4, 0);
+      },
+
       '<': function () {
         c = color((c.hsba[0] - cInc) % 360, c.hsba[1], c.hsba[2], c.hsba[3]);
       },
@@ -60,12 +71,12 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(80, 80, 80, 1);
+    c = color(80, 80, 80, 0.1);
 
     frameRate(1);
     createCanvas(w, h);
     noFill();
-    background(color(70, 10, 80, 1));
+    background(color(0,0,0,1));
     translate(x, y);
     rotate(r);
     push();
