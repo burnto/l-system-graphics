@@ -1,10 +1,11 @@
 <script src="p5.js"></script>
+<script src="StackBlur.js"></script>
 <script src="lsystem.js"></script>
 <script>
 
   var angle = 60;
   var d = 100;
-  var iter = 10;
+  var iter = 8;
 
   var w = 1920;
   var h = 1080;
@@ -24,13 +25,25 @@
       'i': "[f[gh]]"
     },
     renderRules: {
-      'f': function () {
-        stroke(c);
-        noFill();
-        strokeWeight(0.5)
-        line(0, 0, d, 0);
-        translate(d,0);
+      'b': function () {
+        console.log('blurring');
+        stackBlurCanvasRGBA('defaultCanvas', 0, 0, w, h, 1);
+        console.log('blurred');
       },
+      'f': (function () {
+        var i = 0;
+        return function () {
+          stroke(c);
+          noFill();
+          strokeWeight(0.5);
+          line(0, 0, d, 0);
+          translate(d,0);
+          if (i++ % 100 === 0) {
+            console.log('blur');
+            stackBlurCanvasRGBA('defaultCanvas', 0, 0, w, h, 1);
+          }
+        }
+      }()),
       'g': function () {
         ellipse(0, 0, d/2, d/2);
         translate(d, 0);
@@ -71,7 +84,7 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(80, 80, 80, 0.1);
+    c = color(80, 80, 80, 0.4);
 
     frameRate(1);
     createCanvas(w, h);
