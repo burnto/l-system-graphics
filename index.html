@@ -3,58 +3,46 @@
 <script src="lsystem.js"></script>
 <script>
 
-  var angle = 60;
-  var d = 100;
-  var iter = 8;
+  var angle = 30;
+  var d = 120;
+  var iter = 12;
 
   var w = 1920;
   var h = 1080;
-  var x = w * .3;
+  var x = w * .5;
   var y = h * .5;
   var r = -135;
 
-  var cInc = -0.001;
+  var cInc = +0.01;
 
   var c;
   var system = new LSystem({
     axiom: 'f',
     rules: {
-      'f': ">gf*[+>fi]",
-      'g': "[+gf[>h]]",
-      'h': "[f[g]]",
-      'i': "[f[gh]]"
+      'f': '[+gf][-gf]'
     },
     renderRules: {
-      'b': function () {
-        console.log('blurring');
-        stackBlurCanvasRGBA('defaultCanvas', 0, 0, w, h, 1);
-        console.log('blurred');
-      },
-      'f': (function () {
-        var i = 0;
-        return function () {
-          stroke(c);
-          noFill();
-          strokeWeight(0.5);
-          line(0, 0, d, 0);
-          translate(d,0);
-          if (i++ % 100 === 0) {
-            console.log('blur');
-            stackBlurCanvasRGBA('defaultCanvas', 0, 0, w, h, 1);
-          }
-        }
-      }()),
-      'g': function () {
-        ellipse(0, 0, d/2, d/2);
+      'f': function () {
+        //stackBlurCanvasRGBA('defaultCanvas', 0, 0, w, h, 1);
+        stroke(c);
+    strokeWeight(0.01);
+        noFill();
+        line(0, 0, d, 0);
         translate(d, 0);
       },
+      'g': function () {
+        stroke(c);
+        strokeWeight(0.01);
+        rect(0, 0, d/2, d/2);
+        translate(d/2, 0);
+      },
       'h': function () {
-        ellipse(0, 0, d/3, d/3),
+        rect(0, 0, d/3, d/3),
         translate(2 * d / 3, 0);
       },
       'i': function () {
-        ellipse(0, 0, d/4, d/4),
-        translate(2 * d / 4, 0);
+        line(0, 0, d/4, d/4),
+        translate(2 * d / 8, 0);
       },
 
       '<': function () {
@@ -69,9 +57,6 @@
       ']': function () {
         pop();
       },
-      '*': function () {
-        angle += 30
-      },
       '+': function () {
         rotate(angle);
       },
@@ -84,17 +69,17 @@
   function setup() {
     angleMode(DEGREES);
     colorMode(HSB);
-    c = color(80, 80, 80, 0.4);
-
+    c = color(0,0,100);
     frameRate(1);
     createCanvas(w, h);
     noFill();
-    background(color(0,0,0,1));
+    background(color(0,0,30,1));
     translate(x, y);
     rotate(r);
     push();
     system.reset();
     system.simulate(iter);
+    console.log(system.getState());
     system.render();
     pop();
   }

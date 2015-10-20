@@ -12,7 +12,6 @@ LSystem.prototype = (function () {
 
     reset: function () {
       state = this.axiom;
-
     },
 
     render: function () {
@@ -45,6 +44,10 @@ LSystem.prototype = (function () {
       for (var i = 0; i < n; i++) {
         this.step();
       }
+    },
+
+    getState: function () {
+      return state;
     }
   };
 
