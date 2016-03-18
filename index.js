@@ -5,8 +5,8 @@ var angle = 30;
 var d = 140;
 var iter = 3;
 
-var w = 300;
-var h = 200;
+var w = 600;
+var h = 400;
 var x = w * .5;
 var y = h * .5;
 var r = 0;
@@ -17,19 +17,25 @@ var c, c2;
 var system = new LSystem({
   axiom: 'f',
   rules: {
-    'f': '+fg[+fg[+>fg[+fg]]]'
+    'f': '+feg[+efg[+>feg[+fg]]]'
   },
   renderRules: {
     'f': function () {
       fill(c2);
       textSize(12);
-      text('(', 0, 0);
+      text('B', 0, 0);
       translate(d, 0);
     },
     'g': function () {
       fill(c);
       textSize(12);
-      text(')', 0, 0);
+      text('0', 0, 0);
+      translate(d, 0);
+    },
+    'e': function () {
+      fill(c);
+      textSize(12);
+      text('$', 0, 0);
       translate(d, 0);
     },
     'h': function () {
